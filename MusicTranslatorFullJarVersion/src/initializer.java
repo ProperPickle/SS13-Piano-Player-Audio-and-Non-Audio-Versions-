@@ -27,6 +27,7 @@ public class initializer {
 			File f1 = new File(System.getenv("APPDATA")+"\\.pianoplayer\\formatted");
 			File f2 = new File(System.getenv("APPDATA")+"\\.pianoplayer\\formatted2");
 			File s = new File(System.getenv("APPDATA")+"\\.pianoplayer\\Songs");
+			File n = new File(System.getenv("APPDATA")+"\\.pianoplayer\\Notes");
 		    if (f1.createNewFile()) {
 		      System.out.println("File created: " + f1.getName());
 		    } else {
@@ -52,6 +53,19 @@ public class initializer {
 			else { 
 				System.out.println("Directory songs could not be created."); 
 			}
+			if (n.mkdir() == true) {
+		    	for (int i = 1; i<8;i++) {
+		    		for (int l = 0;l<8;l++) {
+		    			if (!(l==0 && !(i==1 || i==2))) {
+		    				copyFileNotes(charFromInt(i)+l);
+		    				copyFileNotes(charFromInt(i)+"-"+l);
+		    			}
+		    		}
+		    	}
+		    	copyFileNotes("rrr");
+		    }else { 
+				System.out.println("Directory notes could not be created."); 
+			}
 		    } catch (IOException e) {
 		      System.out.println("An error occurred while initializing files.");
 		      e.printStackTrace();
@@ -62,5 +76,12 @@ public class initializer {
 		InputStream inputStream = initializer.class.getResourceAsStream("src/Songs/"+fileName+".son");
     	Path pathTarget = Paths.get(System.getenv("APPDATA"),"/.pianoplayer/Songs/"+fileName+".son");
     	Files.copy(inputStream, pathTarget, StandardCopyOption.REPLACE_EXISTING);
+	}
+	private static String charFromInt(int i) {
+		if (i>0 && i <27) {
+			return String.valueOf((char)(i+96));
+		}
+		System.out.println("Null");
+		return null;
 	}
 }
