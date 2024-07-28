@@ -71,7 +71,12 @@ public class initializer {
 		      e.printStackTrace();
 		    }
 	}
-	//Method for copying files from the jar files to the APPDATA directories, just songs for this non-audio version.
+	//Method for copying files from the jar files to the APPDATA directories.
+	public static void copyFileNotes(String fileName) throws IOException {
+		InputStream inputStream = initializer.class.getResourceAsStream("src/Notes/"+fileName+".mp3");
+    	Path pathTarget = Paths.get(System.getenv("APPDATA"),"/.pianoplayer/Notes/"+fileName+".mp3");
+    	Files.copy(inputStream, pathTarget, StandardCopyOption.REPLACE_EXISTING);
+	}
 	public static void copyFileSongs(String fileName) throws IOException {
 		InputStream inputStream = initializer.class.getResourceAsStream("src/Songs/"+fileName+".son");
     	Path pathTarget = Paths.get(System.getenv("APPDATA"),"/.pianoplayer/Songs/"+fileName+".son");
